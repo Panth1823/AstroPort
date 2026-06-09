@@ -113,6 +113,15 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  n8n: (props: IconProps) => (
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <title>n8n</title>
+      <path
+        fill="currentColor"
+        d="M7.5 4.5h9A3.5 3.5 0 0 1 20 8v8a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 16V8a3.5 3.5 0 0 1 3.5-3.5Zm0 2A1.5 1.5 0 0 0 6 8v8a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 16V8a1.5 1.5 0 0 0-1.5-1.5h-9ZM8 8.5h1.4l3.2 4.6V8.5H14v7h-1.4l-3.2-4.6v4.6H8v-7Zm6.6 0h1.8v7h-1.8v-7Z"
+      />
+    </svg>
+  ),
   notion: (props: IconProps) => (
     <svg
       width="100"
