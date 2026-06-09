@@ -1,6 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+function getSiteUrl(request: NextRequest) {
+  if (process.env.NEXT_PUBLIC_URL) {
+    return process.env.NEXT_PUBLIC_URL;
+  }
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+
+  const forwardedProto = request.headers.get("x-forwarded-proto") || "https";
+  const forwardedHost = request.headers.get("x-forwarded-host") || request.headers.get("host");
+
+  if (forwardedHost) {
+    return `${forwardedProto}://${forwardedHost}`;
+  }
+
+  return "http://localhost:3000";
+}
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -35,6 +52,7 @@ async function getAccessToken() {
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
+  const siteUrl = getSiteUrl(request);
   const accept = request.headers.get("accept") || "";
   const dest = request.headers.get("sec-fetch-dest") || "";
   const wantsHtml = dest === "document" || accept.includes("text/html");
@@ -59,7 +77,7 @@ export async function GET(request: NextRequest) {
 <body>
   <div class="wrap">
     <h1>spotify now-playing api</h1>
-    <p>this endpoint returns the current track from spotify as <code>{ isPlaying, title, artist, albumImageUrl, songUrl }</code> for <a href="${SITE_URL}">${SITE_URL}</a>.</p>
+    <p>this endpoint returns the current track from spotify as <code>{ isPlaying, title, artist, albumImageUrl, songUrl }</code> for <a href="${siteUrl}">${siteUrl}</a>.</p>
     <p>it&apos;s intended for the site to poll, not to be opened directly in the browser. to avoid rate limits, no spotify request is made on this page.</p>
     <p>you can close this tab now 👋</p>
   </div>
