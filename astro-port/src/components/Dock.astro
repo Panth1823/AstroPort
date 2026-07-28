@@ -1,0 +1,150 @@
+---
+// Dock — fixed bottom-right floating pill navigation
+import ThemeToggle from "./ThemeToggle.astro";
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+---
+
+<nav
+  id="dock"
+  aria-label="Quick navigation"
+  class="fixed bottom-6 right-6 z-50 flex items-center gap-1.5 rounded-full border border-white/15 bg-card/70 px-1 py-1 backdrop-blur-xl backdrop-saturate-150 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.2)]"
+>
+  <!-- Home -->
+  <a
+    href="/"
+    id="dock-home"
+    aria-label="Home"
+    class={`dock-btn ${currentPath === "/" ? "active" : ""}`}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  </a>
+
+  <!-- About -->
+  <a
+    href="/about"
+    id="dock-about"
+    aria-label="About"
+    class={`dock-btn ${currentPath === "/about" ? "active" : ""}`}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </a>
+
+  <!-- Work -->
+  <a
+    href="/work"
+    id="dock-work"
+    aria-label="Work"
+    class={`dock-btn ${currentPath === "/work" ? "active" : ""}`}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+    </svg>
+  </a>
+
+  <!-- Contact -->
+  <a
+    href="mailto:panth@example.com"
+    id="dock-contact"
+    aria-label="Contact"
+    class="dock-btn"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path
+        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+      ></path>
+      <polyline points="22,6 12,13 2,6"></polyline>
+    </svg>
+  </a>
+
+  <!-- Divider -->
+  <span class="w-px h-5 bg-white/10 mx-0.5" aria-hidden="true"></span>
+
+  <!-- Theme Toggle -->
+  <ThemeToggle />
+</nav>
+
+<style>
+  .dock-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 9999px;
+    color: #888888;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dock-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Active / highlighted state */
+  .dock-btn.active {
+    color: #ff3800;
+    background-color: rgba(255, 56, 0, 0.15);
+    border-color: rgba(255, 56, 0, 0.35);
+    box-shadow:
+      0 0 16px rgba(255, 56, 0, 0.25),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .dock-btn.active:hover {
+    color: #ff3800;
+    background-color: rgba(255, 56, 0, 0.25);
+    border-color: rgba(255, 56, 0, 0.5);
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import "../styles/global.css";
+import Dock from "../components/Dock.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Panth",
+  description = "Portfolio of Panth — building products people want to interact with.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="bg-[#0C0A0A]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Theme script: must run inline before first paint to avoid flash -->
+    <script is:inline src="/theme.js"></script>
+  </head>
+  <body class="bg-[#0C0A0A] text-white">
+    <div class="mx-auto w-full max-w-[40rem] px-6 pt-16 sm:pt-24">
+      <slot />
+    </div>
+    <Dock />
+  </body>
+</html>

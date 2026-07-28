@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/* Tell Tailwind v4 to scan .astro files — it doesn't do this by default */
+@source "../../src/**/*.astro";
+
+/* Dark mode via .dark class (matches Litos theme.js) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --color-accent:           #ff3800;
+  --color-surface:          #171412;
+  --color-card:             #171412;
+  --color-muted:            #555555;
+  --color-foreground:       #ffffff;
+  --color-muted-foreground: #999999;
+}
+
+:root {
+  --card: #171412;
+}
+
+/* ── Default (dark) theme ─── */
+html, body {
+  color: #ffffff;
+  background-color: #0C0A0A;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ── Light mode overrides ─── */
+html.dark body,
+html.dark {
+  background-color: #0C0A0A;
+  color: #ffffff;
+}
+
+html:not(.dark) body,
+html:not(.dark) {
+  background-color: #f9f9f7;
+  color: #111111;
+}
+
+/* ── Global Selection & Scrollbar ─────────────────── */
+::selection {
+  background: rgba(255, 56, 0, 0.2);
+  color: #ff3800;
+}
+
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: #0C0A0A; }
+::-webkit-scrollbar-thumb  { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #444; }
+
+/* Disable transitions during theme switch (set by theme.js) */
+.disable-transition * {
+  transition: none !important;
+}

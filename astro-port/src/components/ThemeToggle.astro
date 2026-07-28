@@ -1,0 +1,111 @@
+---
+// ThemeToggle — pure Astro, cycles dark → light → system (adapted from Litos)
+---
+
+<button
+  id="theme-toggle"
+  aria-label="Toggle theme"
+  class="flex items-center justify-center w-10 h-10 rounded-full border border-transparent text-[#888] transition-all duration-200 hover:text-white hover:bg-white/10 hover:border-white/15"
+>
+  <!-- Sun icon (light) -->
+  <span id="icon-sun" class="theme-icon absolute" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </span>
+
+  <!-- Moon icon (dark) -->
+  <span id="icon-moon" class="theme-icon absolute" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </span>
+
+  <!-- Monitor icon (system) -->
+  <span id="icon-system" class="theme-icon absolute" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+      <line x1="8" y1="21" x2="16" y2="21"></line>
+      <line x1="12" y1="17" x2="12" y2="21"></line>
+    </svg>
+  </span>
+</button>
+
+<style>
+  .theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .theme-icon.visible {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  type Theme = "light" | "dark" | "system";
+
+  declare global {
+    interface Window {
+      __theme?: {
+        applyTheme: (theme: Theme) => void;
+        getStoredTheme: () => Theme;
+        setTheme: (theme: Theme, options?: { disableTransition?: boolean }) => void;
+      };
+    }
+  }
+
+  function getStoredTheme(): Theme {
+    const t = localStorage.getItem("theme");
+    return t === "light" || t === "dark" || t === "system" ? t : "system";
+  }
+
+  function updateIcons(theme: Theme) {
+    const sun = document.getElementById("icon-sun");
+    const moon = document.getElementById("icon-moon");
+    const system = document.getElementById("icon-system");
+
+    [sun, moon, system].forEach((el) => el?.classList.remove("visible"));
+
+    if (theme === "light") sun?.classList.add("visible");
+    else if (theme === "dark") moon?.classList.add("visible");
+    else system?.classList.add("visible");
+  }
+
+  function init() {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+
+    updateIcons(getStoredTheme());
+
+    btn.addEventListener("click", () => {
+      const cycle: Record<Theme, Theme> = {
+        dark: "system",
+        system: "light",
+        light: "dark",
+      };
+      const next = cycle[getStoredTheme()];
+      window.__theme?.setTheme(next);
+      updateIcons(next);
+    });
+  }
+
+  // Run on page load and after Astro view transitions
+  init();
+  document.addEventListener("astro:after-swap", init);
+</script>
