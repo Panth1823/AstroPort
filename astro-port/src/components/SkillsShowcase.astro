@@ -1,0 +1,145 @@
+---
+// SkillsShowcase component — infinite scrolling skills & tools marquee
+interface Skill {
+  name: string;
+  icon: string; // SVG icon path / component
+  url?: string;
+}
+
+interface SkillRow {
+  direction: "left" | "right";
+  skills: Skill[];
+}
+
+const skillRows: SkillRow[] = [
+  {
+    direction: "left",
+    skills: [
+      { name: "JavaScript", icon: "js", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+      { name: "CSS", icon: "css", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+      { name: "HTML", icon: "html", url: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
+      { name: "TypeScript", icon: "ts", url: "https://www.typescriptlang.org/" },
+      { name: "Vue", icon: "vue", url: "https://vuejs.org/" },
+      { name: "Sass", icon: "sass", url: "https://sass-lang.com/" },
+    ],
+  },
+  {
+    direction: "right",
+    skills: [
+      { name: "Astro", icon: "astro", url: "https://astro.build/" },
+      { name: "Node.js", icon: "node", url: "https://nodejs.org/" },
+      { name: "React", icon: "react", url: "https://react.dev/" },
+      { name: "Next.js", icon: "next", url: "https://nextjs.org/" },
+      { name: "Tailwind CSS", icon: "tailwind", url: "https://tailwindcss.com/" },
+      { name: "Vite", icon: "vite", url: "https://vitejs.dev/" },
+    ],
+  },
+  {
+    direction: "left",
+    skills: [
+      { name: "Ubuntu", icon: "ubuntu", url: "https://ubuntu.com/" },
+      { name: "Git", icon: "git", url: "https://git-scm.com/" },
+      { name: "MongoDB", icon: "mongodb", url: "https://www.mongodb.com/" },
+      { name: "Vercel", icon: "vercel", url: "https://vercel.com/" },
+      { name: "VS Code", icon: "vscode", url: "https://code.visualstudio.com/" },
+      { name: "Obsidian", icon: "obsidian", url: "https://obsidian.md/" },
+    ],
+  },
+];
+---
+
+<section id="skills" class="my-10">
+  <p class="text-base font-medium text-accent tracking-[0.02em] mb-1">Skills</p>
+  <p class="text-sm text-[#888] mb-6">It's not just skills, but also tools:</p>
+
+  <div class="relative overflow-hidden py-2 px-1 rounded-xl bg-[#12100e]/40 border border-white/5 backdrop-blur-sm">
+    {
+      skillRows.map((row) => {
+        // Quadruple for smooth infinite looping
+        const loopedSkills = [...row.skills, ...row.skills, ...row.skills, ...row.skills];
+        return (
+          <div class="relative w-full overflow-hidden my-3 group">
+            <div
+              class={`flex w-max gap-3 ${
+                row.direction === "right"
+                  ? "animate-scroll-reverse"
+                  : "animate-scroll"
+              } group-hover:[animation-play-state:paused]`}
+            >
+              {loopedSkills.map((skill) => (
+                <a
+                  href={skill.url || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#1c1917] border border-white/10 hover:border-white/25 hover:bg-white/10 transition-all duration-200 shrink-0 text-white text-xs font-medium group/card"
+                >
+                  <!-- Icon badges -->
+                  {skill.name === "JavaScript" && (
+                    <span class="size-4 rounded bg-[#f7df1e] text-black font-bold text-[9px] flex items-center justify-center">JS</span>
+                  )}
+                  {skill.name === "CSS" && (
+                    <span class="size-4 rounded bg-[#1572b6] text-white font-bold text-[9px] flex items-center justify-center">3</span>
+                  )}
+                  {skill.name === "HTML" && (
+                    <span class="size-4 rounded bg-[#e34f26] text-white font-bold text-[9px] flex items-center justify-center">5</span>
+                  )}
+                  {skill.name === "TypeScript" && (
+                    <span class="size-4 rounded bg-[#3178c6] text-white font-bold text-[9px] flex items-center justify-center">TS</span>
+                  )}
+                  {skill.name === "Vue" && (
+                    <span class="size-4 text-[#42b883] font-bold text-xs flex items-center justify-center">V</span>
+                  )}
+                  {skill.name === "Sass" && (
+                    <span class="size-4 text-[#cc6699] font-bold text-xs flex items-center justify-center">S</span>
+                  )}
+                  {skill.name === "Astro" && (
+                    <span class="size-4 text-[#ff5d01] font-bold text-xs flex items-center justify-center">✦</span>
+                  )}
+                  {skill.name === "Node.js" && (
+                    <span class="size-4 text-[#539e43] font-bold text-xs flex items-center justify-center">⬢</span>
+                  )}
+                  {skill.name === "React" && (
+                    <span class="size-4 text-[#61dafb] font-bold text-xs flex items-center justify-center">⚛</span>
+                  )}
+                  {skill.name === "Next.js" && (
+                    <span class="size-4 text-white font-bold text-xs flex items-center justify-center">N</span>
+                  )}
+                  {skill.name === "Tailwind CSS" && (
+                    <span class="size-4 text-[#38bdf8] font-bold text-xs flex items-center justify-center">≈</span>
+                  )}
+                  {skill.name === "Vite" && (
+                    <span class="size-4 text-[#646cff] font-bold text-xs flex items-center justify-center">⚡</span>
+                  )}
+                  {skill.name === "Ubuntu" && (
+                    <span class="size-4 text-[#e95420] font-bold text-xs flex items-center justify-center">U</span>
+                  )}
+                  {skill.name === "Git" && (
+                    <span class="size-4 text-[#f05032] font-bold text-xs flex items-center justify-center">⎇</span>
+                  )}
+                  {skill.name === "MongoDB" && (
+                    <span class="size-4 text-[#47a248] font-bold text-xs flex items-center justify-center">🍃</span>
+                  )}
+                  {skill.name === "Vercel" && (
+                    <span class="size-4 text-white font-bold text-xs flex items-center justify-center">▲</span>
+                  )}
+                  {skill.name === "VS Code" && (
+                    <span class="size-4 text-[#007acc] font-bold text-xs flex items-center justify-center">⚙</span>
+                  )}
+                  {skill.name === "Obsidian" && (
+                    <span class="size-4 text-[#7a3ee8] font-bold text-xs flex items-center justify-center">💎</span>
+                  )}
+
+                  <span>{skill.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })
+    }
+
+    <!-- Gradient fade edges -->
+    <div class="pointer-events-none absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-[#0C0A0A] to-transparent z-10"></div>
+    <div class="pointer-events-none absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-[#0C0A0A] to-transparent z-10"></div>
+  </div>
+</section>

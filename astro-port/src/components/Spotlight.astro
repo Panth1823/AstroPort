@@ -1,0 +1,126 @@
+---
+// Spotlight — GitHub contributions heatmap component
+interface Props {
+  username?: string;
+}
+
+const { username = "Panth1823" } = Astro.props;
+---
+
+<section id="spotlight" class="my-10">
+  <p class="text-base font-medium text-accent tracking-[0.02em] mb-1">Spotlight</p>
+  <p class="text-sm text-[#888] mb-6">GitHub contributions in the past year:</p>
+
+  <div class="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#12100e]/80 p-4 backdrop-blur-sm">
+    <!-- Graph Container -->
+    <div
+      id="github-graph-container"
+      class="flex overflow-x-auto gap-1 pb-2 scrollbar-none scroll-smooth select-none cursor-grab active:cursor-grabbing"
+    >
+      <!-- Loading skeleton grid -->
+      <div class="flex gap-1 animate-pulse" id="graph-skeleton">
+        {
+          Array.from({ length: 50 }).map(() => (
+            <div class="flex flex-col gap-1">
+              {Array.from({ length: 7 }).map(() => (
+                <div class="size-2.5 rounded-[2px] bg-white/5" />
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div
+      id="graph-tooltip"
+      class="pointer-events-none fixed z-50 hidden rounded-md bg-[#1a1714] border border-accent/40 px-2.5 py-1 text-xs text-white shadow-[0_4px_20px_rgba(255,56,0,0.25)] -translate-x-1/2 -translate-y-full mb-2 whitespace-nowrap"
+    >
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ username }}>
+  async function fetchContributions() {
+    const container = document.getElementById("github-graph-container");
+    const tooltip = document.getElementById("graph-tooltip");
+    if (!container) return;
+
+    try {
+      const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+      if (!res.ok) throw new Error("Failed to fetch");
+      const data = await res.json();
+
+      const contributions = data.contributions || [];
+
+      // Group into weeks (7 days each)
+      const weeks = [];
+      for (let i = 0; i < contributions.length; i += 7) {
+        weeks.push(contributions.slice(i, i + 7));
+      }
+
+      // Build HTML
+      container.innerHTML = "";
+      const weeksWrapper = document.createElement("div");
+      weeksWrapper.className = "flex gap-1 min-w-max";
+
+      weeks.forEach((week) => {
+        const weekCol = document.createElement("div");
+        weekCol.className = "flex flex-col gap-1";
+
+        week.forEach((day) => {
+          const square = document.createElement("div");
+          const count = day.count || 0;
+
+          // Orange accent color scale
+          let colorClass = "bg-[#1c1917]";
+          if (count > 0 && count < 3) colorClass = "bg-[#ff3800]/30";
+          else if (count >= 3 && count < 6) colorClass = "bg-[#ff3800]/60";
+          else if (count >= 6 && count < 10) colorClass = "bg-[#ff3800]";
+          else if (count >= 10) colorClass = "bg-[#ffa080] shadow-[0_0_8px_rgba(255,56,0,0.8)]";
+
+          square.className = `size-2.5 rounded-[2px] ${colorClass} transition-all duration-150 hover:scale-125 hover:z-10 cursor-pointer`;
+          square.dataset.date = day.date;
+          square.dataset.count = count;
+
+          // Tooltip listeners
+          square.addEventListener("mouseenter", (e) => {
+            if (!tooltip) return;
+            const formattedDate = new Date(day.date).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            });
+            const text = count === 0 ? `No contributions on ${formattedDate}` : `${count} contribution${count > 1 ? "s" : ""} on ${formattedDate}`;
+            tooltip.textContent = text;
+            tooltip.classList.remove("hidden");
+
+            const rect = square.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + rect.width / 2}px`;
+            tooltip.style.top = `${rect.top - 6}px`;
+          });
+
+          square.addEventListener("mouseleave", () => {
+            tooltip?.classList.add("hidden");
+          });
+
+          weekCol.appendChild(square);
+        });
+
+        weeksWrapper.appendChild(weekCol);
+      });
+
+      container.appendChild(weeksWrapper);
+
+      // Auto-scroll to current date on right
+      requestAnimationFrame(() => {
+        container.scrollLeft = container.scrollWidth;
+      });
+    } catch (err) {
+      console.warn("GitHub contributions API failed, showing mock grid:", err);
+    }
+  }
+
+  fetchContributions();
+  document.addEventListener("astro:after-swap", fetchContributions);
+</script>

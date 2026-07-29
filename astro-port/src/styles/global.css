@@ -14,6 +14,27 @@
   --color-muted:            #555555;
   --color-foreground:       #ffffff;
   --color-muted-foreground: #999999;
+
+  --animate-scroll: scroll 25s linear infinite;
+  --animate-scroll-reverse: scroll-reverse 25s linear infinite;
+
+  @keyframes scroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes scroll-reverse {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
 }
 
 :root {

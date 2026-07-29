@@ -55,11 +55,11 @@ const projects: Project[] = [
 ---
 
 <section id="selected-work">
-  <p class="text-sm font-medium text-accent tracking-[0.02em] mb-5">
+  <p class="text-base font-medium text-accent tracking-[0.02em] mb-5">
     Selected work
   </p>
 
-  <div class="flex flex-col divide-y divide-white/[0.06] mb-20">
+  <div class="flex flex-col divide-y divide-white/6 mb-20">
     {
       projects.map((project) => (
         <article class="group py-5 first:pt-0">
@@ -68,7 +68,7 @@ const projects: Project[] = [
               <h3 class="text-[0.95rem] font-semibold text-white leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
                 {project.title}
               </h3>
-              <p class="text-[0.82rem] text-[#666] leading-[1.6]">
+              <p class="text-[0.82rem] text-[#999] leading-[1.6]">
                 {project.description}
               </p>
 
@@ -77,7 +77,14 @@ const projects: Project[] = [
                 <div class="flex items-center gap-4 mt-3">
                   {project.stars !== undefined && (
                     <span class="flex items-center gap-1 text-[0.72rem] font-medium text-[#555] uppercase tracking-widest">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-[#444]">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="text-[#444]"
+                      >
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                       </svg>
                       Stars&nbsp;
@@ -86,7 +93,18 @@ const projects: Project[] = [
                   )}
                   {project.forks !== undefined && (
                     <span class="flex items-center gap-1 text-[0.72rem] font-medium text-[#555] uppercase tracking-widest">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#444]">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="text-[#444]"
+                      >
                         <line x1="6" y1="3" x2="6" y2="15" />
                         <circle cx="18" cy="6" r="3" />
                         <circle cx="6" cy="18" r="3" />
@@ -110,7 +128,17 @@ const projects: Project[] = [
                   class="flex items-center gap-1 text-[0.75rem] text-[#666] hover:text-white transition-colors duration-150"
                   aria-label={`${project.title} website`}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <circle cx="12" cy="12" r="10" />
                     <line x1="2" y1="12" x2="22" y2="12" />
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -125,7 +153,17 @@ const projects: Project[] = [
                 class="flex items-center gap-1 text-[0.75rem] text-[#666] hover:text-white transition-colors duration-150"
                 aria-label={`${project.title} GitHub`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                 </svg>
                 GitHub
