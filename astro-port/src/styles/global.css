@@ -43,22 +43,91 @@
 
 /* ── Default (dark) theme ─── */
 html, body {
-  color: #ffffff;
-  background-color: #0C0A0A;
+  min-height: 100vh;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ── Light mode overrides ─── */
+/* ── Dark mode explicit ─── */
 html.dark body,
 html.dark {
   background-color: #0C0A0A;
   color: #ffffff;
 }
 
+/* ── Light mode explicit ─── */
 html:not(.dark) body,
 html:not(.dark) {
   background-color: #f9f9f7;
   color: #111111;
+}
+
+html:not(.dark) {
+  --color-foreground: #111111;
+  --color-muted-foreground: #555555;
+  --color-card: #ffffff;
+  --color-surface: #f4f4f0;
+}
+
+/* Light mode text color overrides */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) .text-white,
+html:not(.dark) .text-foreground {
+  color: #111111 !important;
+}
+
+html:not(.dark) .text-\[\#a6a09b\],
+html:not(.dark) .text-\[\#999\],
+html:not(.dark) .text-\[\#888\],
+html:not(.dark) .text-\[\#bbb\] {
+  color: #555555 !important;
+}
+
+html:not(.dark) .text-\[\#555\],
+html:not(.dark) .text-\[\#444\],
+html:not(.dark) .text-\[\#666\],
+html:not(.dark) .text-\[\#3a3a3a\] {
+  color: #666666 !important;
+}
+
+html:not(.dark) .text-\[\#333\] {
+  color: #cccccc !important;
+}
+
+/* Light mode backgrounds & cards */
+html:not(.dark) .bg-\[\#0C0A0A\] {
+  background-color: #f9f9f7 !important;
+}
+
+html:not(.dark) .bg-\[\#171412\],
+html:not(.dark) .bg-\[\#292526\],
+html:not(.dark) .bg-card {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) .bg-card\/70 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html:not(.dark) .bg-white\/4,
+html:not(.dark) .bg-white\/5,
+html:not(.dark) .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Light mode borders & dividers */
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/6,
+html:not(.dark) .border-white\/\[0\.07\] {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html:not(.dark) .divide-white\/6 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ── Global Selection & Scrollbar ─────────────────── */

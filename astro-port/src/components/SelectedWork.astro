@@ -55,20 +55,20 @@ const projects: Project[] = [
 ---
 
 <section id="selected-work">
-  <p class="text-base font-medium text-accent tracking-[0.02em] mb-5">
+  <p class="text-md font-medium text-primary text-[#a6a09b] mb-5">
     Selected work
   </p>
 
-  <div class="flex flex-col divide-y divide-white/6 mb-20">
+  <div class="flex flex-col divide-y divide-white/6 mb-16">
     {
       projects.map((project) => (
         <article class="group py-5 first:pt-0">
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
-              <h3 class="text-[0.95rem] font-semibold text-white leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
+              <h3 class="text-lg font-semibold text-white leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
                 {project.title}
               </h3>
-              <p class="text-[0.82rem] text-[#999] leading-[1.6]">
+              <p class="text-sm text-[#a6a09b] leading-[1.6]">
                 {project.description}
               </p>
 
@@ -76,11 +76,11 @@ const projects: Project[] = [
               {(project.stars !== undefined || project.forks !== undefined) && (
                 <div class="flex items-center gap-4 mt-3">
                   {project.stars !== undefined && (
-                    <span class="flex items-center gap-1 text-[0.72rem] font-medium text-[#555] uppercase tracking-widest">
+                    <span class="flex items-center gap-1 text-[13px] font-medium text-[#555] uppercase tracking-widest">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         class="text-[#444]"
@@ -88,15 +88,17 @@ const projects: Project[] = [
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                       </svg>
                       Stars&nbsp;
-                      <span class="text-white font-bold">{project.stars}</span>
+                      <span class="text-white font-bold text-[16px]">
+                        {project.stars}
+                      </span>
                     </span>
                   )}
                   {project.forks !== undefined && (
-                    <span class="flex items-center gap-1 text-[0.72rem] font-medium text-[#555] uppercase tracking-widest">
+                    <span class="flex items-center gap-1 text-[13px] font-medium text-[#555] uppercase tracking-widest">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -111,7 +113,9 @@ const projects: Project[] = [
                         <path d="M18 9a9 9 0 0 1-9 9" />
                       </svg>
                       Forks&nbsp;
-                      <span class="text-white font-bold">{project.forks}</span>
+                      <span class="text-white font-bold text-[16px]">
+                        {project.forks}
+                      </span>
                     </span>
                   )}
                 </div>
@@ -119,19 +123,19 @@ const projects: Project[] = [
             </div>
 
             {/* Links */}
-            <div class="flex items-center gap-3 shrink-0 pt-0.5">
+            <div class="flex items-center gap-3 shrink-0">
               {project.website && (
                 <a
                   href={project.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center gap-1 text-[0.75rem] text-[#666] hover:text-white transition-colors duration-150"
+                  class="flex items-center gap-1 text-[13px] text-[#666] hover:text-white transition-colors duration-150"
                   aria-label={`${project.title} website`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="13"
-                    height="13"
+                    width="20"
+                    height="20"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -155,8 +159,8 @@ const projects: Project[] = [
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

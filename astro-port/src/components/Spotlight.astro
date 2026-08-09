@@ -8,14 +8,16 @@ const { username = "Panth1823" } = Astro.props;
 ---
 
 <section id="spotlight" class="my-10">
-  <p class="text-base font-medium text-accent tracking-[0.02em] mb-1">Spotlight</p>
+  <p class="text-lg font-semibold text-primary mb-1">Spotlight</p>
   <p class="text-sm text-[#888] mb-6">GitHub contributions in the past year:</p>
 
-  <div class="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#12100e]/80 p-4 backdrop-blur-sm">
+  <div
+    class="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#12100e]/80 p-2 backdrop-blur-sm"
+  >
     <!-- Graph Container -->
     <div
       id="github-graph-container"
-      class="flex overflow-x-auto gap-1 pb-2 scrollbar-none scroll-smooth select-none cursor-grab active:cursor-grabbing"
+      class="flex overflow-x-auto gap-1 scrollbar-none scroll-smooth select-none"
     >
       <!-- Loading skeleton grid -->
       <div class="flex gap-1 animate-pulse" id="graph-skeleton">
@@ -23,7 +25,7 @@ const { username = "Panth1823" } = Astro.props;
           Array.from({ length: 50 }).map(() => (
             <div class="flex flex-col gap-1">
               {Array.from({ length: 7 }).map(() => (
-                <div class="size-2.5 rounded-[2px] bg-white/5" />
+                <div class="size-2.5 rounded-xs bg-white/5" />
               ))}
             </div>
           ))
@@ -47,7 +49,9 @@ const { username = "Panth1823" } = Astro.props;
     if (!container) return;
 
     try {
-      const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+      const res = await fetch(
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+      );
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
 
@@ -77,7 +81,8 @@ const { username = "Panth1823" } = Astro.props;
           if (count > 0 && count < 3) colorClass = "bg-[#ff3800]/30";
           else if (count >= 3 && count < 6) colorClass = "bg-[#ff3800]/60";
           else if (count >= 6 && count < 10) colorClass = "bg-[#ff3800]";
-          else if (count >= 10) colorClass = "bg-[#ffa080] shadow-[0_0_8px_rgba(255,56,0,0.8)]";
+          else if (count >= 10)
+            colorClass = "bg-[#ffa080] shadow-[0_0_8px_rgba(255,56,0,0.8)]";
 
           square.className = `size-2.5 rounded-[2px] ${colorClass} transition-all duration-150 hover:scale-125 hover:z-10 cursor-pointer`;
           square.dataset.date = day.date;
@@ -86,12 +91,18 @@ const { username = "Panth1823" } = Astro.props;
           // Tooltip listeners
           square.addEventListener("mouseenter", (e) => {
             if (!tooltip) return;
-            const formattedDate = new Date(day.date).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            });
-            const text = count === 0 ? `No contributions on ${formattedDate}` : `${count} contribution${count > 1 ? "s" : ""} on ${formattedDate}`;
+            const formattedDate = new Date(day.date).toLocaleDateString(
+              "en-US",
+              {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              },
+            );
+            const text =
+              count === 0
+                ? `No contributions on ${formattedDate}`
+                : `${count} contribution${count > 1 ? "s" : ""} on ${formattedDate}`;
             tooltip.textContent = text;
             tooltip.classList.remove("hidden");
 
