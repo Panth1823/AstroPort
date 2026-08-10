@@ -187,22 +187,58 @@ const projects: Project[] = [
 
 <script>
   async function fetchRepoStats() {
-    const articles = document.querySelectorAll<HTMLElement>("[data-repo]");
-    articles.forEach(async (article) => {
-      const fullRepo = article.dataset.repo;
-      if (!fullRepo) return;
-      try {
-        const res = await fetch(`https://api.github.com/repos/${fullRepo}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        const starEl = article.querySelector<HTMLElement>(".star-count");
-        const forkEl = article.querySelector<HTMLElement>(".fork-count");
-        if (starEl && data.stargazers_count !== undefined) starEl.textContent = String(data.stargazers_count);
-        if (forkEl && data.forks_count !== undefined) forkEl.textContent = String(data.forks_count);
-      } catch (e) {
-        // keep pre-rendered fallback
-      }
-    });
+    try {
+      const articles = document.querySelectorAll<HTMLElement>("[data-repo]");
+      if (!articles.length) return;
+
+      // Extract unique GitHub usernames from data-repo attributes
+      const usernames = new Set<string>();
+      articles.forEach((art) => {
+        const repo = art.dataset.repo;
+        if (repo && repo.includes("/")) {
+          usernames.add(repo.split("/")[0]);
+        }
+      });
+
+      const repoMap = new Map<string, { stars: number; forks: number }>();
+
+      // Fetch user repos lists (200 OK) instead of individual repo endpoints (which 404 if private/unlisted)
+      await Promise.all(
+        Array.from(usernames).map(async (user) => {
+          try {
+            const res = await fetch(`https://api.github.com/users/${user}/repos?per_page=100`);
+            if (!res.ok) return;
+            const repos = await res.json();
+            if (Array.isArray(repos)) {
+              repos.forEach((r: any) => {
+                if (r.full_name) {
+                  repoMap.set(r.full_name.toLowerCase(), {
+                    stars: r.stargazers_count ?? 0,
+                    forks: r.forks_count ?? 0,
+                  });
+                }
+              });
+            }
+          } catch (err) {
+            // Ignore fetch errors silently
+          }
+        })
+      );
+
+      articles.forEach((article) => {
+        const fullRepo = article.dataset.repo;
+        if (!fullRepo) return;
+        const data = repoMap.get(fullRepo.toLowerCase());
+        if (data) {
+          const starEl = article.querySelector<HTMLElement>(".star-count");
+          const forkEl = article.querySelector<HTMLElement>(".fork-count");
+          if (starEl && data.stars !== undefined) starEl.textContent = String(data.stars);
+          if (forkEl && data.forks !== undefined) forkEl.textContent = String(data.forks);
+        }
+      });
+    } catch (e) {
+      // Ignore errors silently
+    }
   }
 
   fetchRepoStats();
