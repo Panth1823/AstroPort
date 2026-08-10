@@ -38,14 +38,14 @@ const caseStudies = [
 
 const tools = [
   {
-    title: "formulaCoach CLI",
+    title: "formulaCoach CLI  ↗",
     description:
       "Command-line tool to pull and diff F1 session telemetry directly from the FastF1 API.",
     tags: ["python", "cli", "f1"],
     href: "https://github.com/Panth1823",
   },
   {
-    title: "AI Prompt Kit",
+    title: "AI Prompt Kit  ↗",
     description:
       "A curated collection of prompts and LLM utilities for developer workflows — generation, review, and refactor.",
     tags: ["ai", "llm", "tools"],
@@ -58,7 +58,7 @@ const tools = [
   title="Work — Panth"
   description="Case studies and open-source tools built by Panth."
 >
-  <div class="pb-20">
+  <div class="pb-28">
     <!-- Breadcrumb -->
     <nav
       class="flex items-center gap-2 text-[0.72rem] font-medium tracking-widest uppercase mb-14"
@@ -90,15 +90,17 @@ const tools = [
 
     <!-- Page heading -->
     <div class="mb-12">
-      <h1 class="text-3xl font-bold tracking-tight text-white mb-2">Work</h1>
-      <p class="mt-4 max-w-136 leading-relaxed text-muted-foreground text-md">
+      <h1 class="text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
+        Work
+      </h1>
+      <p class="mt-4 max-w-136 leading-relaxed text-[#a6a09b] text-md">
         Projects I've shipped, plus the open-source tools I build on the side.
       </p>
     </div>
 
     <!-- Case Studies -->
     <section class="mb-14">
-      <p class="text-base font-medium text-accent tracking-[0.02em] mb-5">
+      <p class="font-medium mb-6 section-label mt-16 text-md text-[#a6a09b]">
         Case studies
       </p>
 
@@ -119,7 +121,7 @@ const tools = [
                   {project.description}
                 </p>
               </div>
-              <span class="shrink-0 text-[0.75rem] text-[#666] pt-0.5">
+              <span class="shrink-0 text-[13px] text-[#a6a09b]">
                 {project.date}
               </span>
             </a>
@@ -130,7 +132,7 @@ const tools = [
 
     <!-- Tools -->
     <section>
-      <p class="text-base font-medium text-accent tracking-[0.02em] mb-5">
+      <p class="font-medium mb-6 section-label mt-16 text-md text-[#a6a09b]">
         Tools
       </p>
 
@@ -147,22 +149,6 @@ const tools = [
                     class="hover:text-accent transition-colors duration-150 inline-flex items-center gap-1"
                   >
                     {tool.title}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="11"
-                      height="11"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="opacity-50"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
                   </a>
                 </h2>
               </div>
@@ -171,7 +157,7 @@ const tools = [
               </p>
               <div class="flex flex-wrap gap-1.5">
                 {tool.tags.map((tag) => (
-                  <span class="px-2 py-0.5 rounded-full text-[0.68rem] font-medium bg-white/4 border border-white/[0.07] text-[#666]">
+                  <span class="px-2 py-0.5 rounded-full text-[0.68rem] font-medium bg-[#292526] border border-white/[0.07] text-[#a6a09b]">
                     #{tag}
                   </span>
                 ))}

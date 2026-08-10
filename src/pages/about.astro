@@ -67,7 +67,7 @@ const education = [
   title="About — Panth"
   description="About Panth — CS student, developer, and builder of AI-powered full-stack applications."
 >
-  <div class="pb-20">
+  <div class="pb-28">
 
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 text-[0.72rem] font-medium tracking-widest uppercase mb-14">
@@ -168,21 +168,24 @@ const education = [
     </div>
 
     <!-- Experience -->
-    <section class="mb-12">
-      <h2 class="text-sm font-medium text-[#a6a09b] mb-6">
+    <section class="mb-14">
+      <h2 class="  mb-6  section-label mt-16 text-md text-[#a6a09b]">
         Experience
       </h2>
 
       <div class="space-y-8">
         {
           experience.map((job) => (
-            <div class="flex gap-4">
-              <!-- Company icon bubble -->
-              <div class="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-[#292526] text-foreground mt-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
+            <div class="flex gap-4 mb-5">
+              <!-- Company icon bubble & vertical line -->
+              <div class="flex flex-col items-center shrink-0 w-9">
+                <div class="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-[#292526] text-foreground">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <div class="border-l border-[#ffffff1a] flex-1 my-2"></div>
               </div>
 
               <div class="flex-1 min-w-0">
@@ -197,30 +200,27 @@ const education = [
                   {job.roles.map((role, roleIndex) => {
                     const roleId = `role-${job.company.replace(/\s+/g, '-').toLowerCase()}-${roleIndex}`;
                     return (
-                      <div class="border-l border-white/[0.07]">
+                      <div>
                         <!-- Role header (clickable) -->
                         <button
                           type="button"
-                          class={`role-toggle w-full flex items-start justify-between gap-4 py-2 pl-3 text-left cursor-pointer`}
+                          class={`role-toggle w-full flex items-start justify-between gap-4 py-2 pl-0 text-left cursor-pointer`}
                           aria-expanded="false"
                           data-target={roleId}
                         >
-                          <div class="flex items-start gap-2 min-w-0">
+                          <div class="flex items-start gap-2.5 min-w-0">
                             <!-- Role type icon -->
                             {role.icon === "briefcase" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`mt-0.75 shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
                                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                               </svg>
                             )}
                             {role.icon === "code" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`mt-0.75 shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
-                                <polyline points="16 18 22 12 16 6"></polyline>
-                                <polyline points="8 6 2 12 8 18"></polyline>
-                              </svg>
+<svg width="1em" height="1em" class="size-4" aria-hidden="true" data-icon="solar:code-2-linear"><symbol id="ai:solar:code-2-linear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m16 11l1.697 1.527c1.542 1.388 2.313 2.082 2.313 2.973c0 .89-.771 1.585-2.314 2.973L16 20M13.987 5l-1.994 7.5L10 20M8 4.83L6.304 6.356C4.76 7.745 3.99 8.44 3.99 9.33s.771 1.585 2.314 2.973L8 13.83"></path></symbol><use href="#ai:solar:code-2-linear"></use></svg>
                             )}
                             {role.icon === "users" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`mt-0.75 shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="9" cy="7" r="4"></circle>
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -228,7 +228,7 @@ const education = [
                               </svg>
                             )}
                             {role.icon === "git" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={`mt-0.75 shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
                                 <circle cx="18" cy="18" r="3"></circle>
                                 <circle cx="6" cy="6" r="3"></circle>
                                 <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
@@ -236,10 +236,10 @@ const education = [
                               </svg>
                             )}
                             <div class="min-w-0">
-                              <p class={`text-[0.82rem] font-medium leading-snug ${role.active ? "text-accent" : "text-[#bbb]"}`}>
+                            <p class={`text-[15px] font-medium leading-snug ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
                                 {role.title}
                               </p>
-                              <p class={`text-[0.72rem] mt-0.5 ${role.active ? "text-accent/60" : "text-[#444]"}`}>
+                              <p class={`text-sm mt-0.5 ${role.active ? "text-accent/60" : "text-[#a6a09b]"}`}>
                                 {role.type} · {role.period}
                               </p>
                             </div>
@@ -255,15 +255,15 @@ const education = [
                             stroke-width="1.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="chevron shrink-0 mt-0.5 text-[#444] transition-transform duration-200"
+                            class="chevron shrink-0   transition-transform duration-200"
                           >
                             <polyline points="6 9 12 15 18 9"></polyline>
                           </svg>
                         </button>
 
                         <!-- Collapsible description -->
-                        <div id={roleId} class="role-content hidden overflow-hidden pl-5.75 pb-2">
-                          <p class="text-[0.78rem] text-[#555] leading-relaxed">
+                        <div id={roleId} class="role-content hidden overflow-hidden pl-5 pb-2">
+                          <p class="text-sm text-[#a6a09b] leading-relaxed">
                             {role.description}
                           </p>
                         </div>
@@ -280,7 +280,7 @@ const education = [
 
     <!-- Education -->
     <section>
-      <h2 class="text-sm font-medium text-[#a6a09b] mb-5">
+      <h2 class="font-medium    mb-6  section-label mt-16 text-md text-[#a6a09b]">
         Education
       </h2>
 
@@ -288,10 +288,10 @@ const education = [
         {
           education.map((edu) => (
             <div class="flex items-baseline gap-5">
-              <span class="text-[0.75rem] text-[#444] shrink-0 w-16">{edu.period}</span>
+              <span class="text-sm text-[#a6a09b]">{edu.period}</span>
               <div>
-                <span class="text-sm font-semibold text-white">{edu.degree}</span>
-                <span class="text-sm text-[#555]">, {edu.institution}.</span>
+                <span class="text-[15px] font-semibold text-white">{edu.degree}</span>
+                <span class="text-[15px]  ">, {edu.institution}.</span>
               </div>
             </div>
           ))
