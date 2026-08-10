@@ -69,7 +69,7 @@
 
   function getStoredTheme(): Theme {
     const t = localStorage.getItem("theme");
-    return t === "light" || t === "dark" || t === "system" ? t : "system";
+    return t === "light" || t === "dark" || t === "system" ? (t as Theme) : "dark";
   }
 
   function updateIcons(theme: Theme) {
