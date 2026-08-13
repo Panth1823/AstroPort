@@ -55,6 +55,7 @@ const projects: Project[] = [
     stars: 0,
     forks: 0,
     github: "https://github.com/Panth1823/sharesave",
+    website: "https://sharesave-six.vercel.app",
   },
 ];
 ---
@@ -70,10 +71,10 @@ const projects: Project[] = [
         <article class="group py-5 first:pt-0" data-repo={project.repo}>
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-white leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
+              <h3 class="text-lg font-semibold text-white leading-snug mb-1 group-hover:text-accent transition-colors duration-150 capitalize">
                 {project.title}
               </h3>
-              <p class="text-sm text-[#a6a09b] leading-[1.6]">
+              <p class="text-sm text-[#a6a09b] leading-[1.6] max-w-125">
                 {project.description}
               </p>
 
@@ -206,7 +207,9 @@ const projects: Project[] = [
       await Promise.all(
         Array.from(usernames).map(async (user) => {
           try {
-            const res = await fetch(`https://api.github.com/users/${user}/repos?per_page=100`);
+            const res = await fetch(
+              `https://api.github.com/users/${user}/repos?per_page=100`,
+            );
             if (!res.ok) return;
             const repos = await res.json();
             if (Array.isArray(repos)) {
@@ -222,7 +225,7 @@ const projects: Project[] = [
           } catch (err) {
             // Ignore fetch errors silently
           }
-        })
+        }),
       );
 
       articles.forEach((article) => {
@@ -232,8 +235,10 @@ const projects: Project[] = [
         if (data) {
           const starEl = article.querySelector<HTMLElement>(".star-count");
           const forkEl = article.querySelector<HTMLElement>(".fork-count");
-          if (starEl && data.stars !== undefined) starEl.textContent = String(data.stars);
-          if (forkEl && data.forks !== undefined) forkEl.textContent = String(data.forks);
+          if (starEl && data.stars !== undefined)
+            starEl.textContent = String(data.stars);
+          if (forkEl && data.forks !== undefined)
+            forkEl.textContent = String(data.forks);
         }
       });
     } catch (e) {

@@ -38,5 +38,24 @@ const {
       <slot />
     </div>
     <Dock />
+
+    <script>
+      // @ts-ignore
+      import { bind } from "cuelume";
+
+      function initGlobalAudio() {
+        bind();
+        const interactiveElements = document.querySelectorAll("a, button, [role='button']");
+        interactiveElements.forEach((el) => {
+          if (!el.hasAttribute("data-cuelume-hover")) {
+            el.setAttribute("data-cuelume-hover", "tick");
+          }
+        });
+        bind();
+      }
+
+      initGlobalAudio();
+      document.addEventListener("astro:after-swap", initGlobalAudio);
+    </script>
   </body>
 </html>

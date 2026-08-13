@@ -8,16 +8,25 @@ const { username = "Panth1823" } = Astro.props;
 ---
 
 <section id="spotlight" class="my-10">
-  <p class="text-lg font-semibold text-primary mb-1">Spotlight</p>
-  <p class="text-sm text-[#888] mb-6">GitHub contributions in the past year:</p>
+  <div class="mb-6 flex flex-col gap-1">
+    <p class="text-lg font-semibold text-primary mb-1">Github Heatmap</p>
+    <div class="flex items-center justify-between text-sm sm:text-sm">
+      <p class="text-[#888]">
+        Total: <span id="total-contributions" class="font-bold text-white"
+          >--</span
+        > contributions
+      </p>
+      <p class="text-xs sm:text-sm text-[#888]">Currently touching grass</p>
+    </div>
+  </div>
 
   <div
-    class="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#12100e]/80 p-2 backdrop-blur-sm"
+    class="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#12100e]/80 p-4 backdrop-blur-sm"
   >
     <!-- Graph Container -->
     <div
       id="github-graph-container"
-      class="flex overflow-x-auto gap-1 scrollbar-none scroll-smooth select-none"
+      class="flex overflow-x-auto gap-1 scrollbar-none select-none"
     >
       <!-- Loading skeleton grid -->
       <div class="flex gap-1 animate-pulse" id="graph-skeleton">
@@ -33,6 +42,40 @@ const { username = "Panth1823" } = Astro.props;
       </div>
     </div>
 
+    <!-- Accessibility Slider & Legend -->
+    <div
+      class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-white/5"
+    >
+      <div class="w-full sm:w-2/3 flex items-center">
+        <label for="heatmap-slider" class="sr-only"
+          >Scroll GitHub heatmap timeline slider</label
+        >
+        <input
+          type="range"
+          id="heatmap-slider"
+          min="0"
+          max="100"
+          value="100"
+          aria-label="Scroll GitHub heatmap timeline"
+          aria-controls="github-graph-container"
+          class="heatmap-slider-input w-full h-1 bg-white/15 rounded-lg appearance-none cursor-pointer"
+        />
+      </div>
+
+      <div
+        class="flex items-center gap-1.5 text-[10px] tracking-wider text-[#888] uppercase select-none font-mono self-end sm:self-center"
+      >
+        <span>LESS</span>
+        <span class="size-2.5 rounded-xs bg-[#1c1917] border border-white/5"
+        ></span>
+        <span class="size-2.5 rounded-xs bg-accent/30"></span>
+        <span class="size-2.5 rounded-xs bg-accent/60"></span>
+        <span class="size-2.5 rounded-xs bg-accent"></span>
+        <span class="size-2.5 rounded-xs bg-[#ffa080]"></span>
+        <span>MORE</span>
+      </div>
+    </div>
+
     <!-- Tooltip -->
     <div
       id="graph-tooltip"
@@ -42,11 +85,77 @@ const { username = "Panth1823" } = Astro.props;
   </div>
 </section>
 
+<style>
+  .heatmap-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff3800;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 56, 0, 0.6);
+    transition: transform 0.15s ease;
+  }
+  .heatmap-slider-input::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+  }
+  .heatmap-slider-input::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-radius: 50%;
+    background: #ff3800;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 56, 0, 0.6);
+    transition: transform 0.15s ease;
+  }
+  .heatmap-slider-input::-moz-range-thumb:hover {
+    transform: scale(1.25);
+  }
+</style>
+
 <script define:vars={{ username }}>
   async function fetchContributions() {
     const container = document.getElementById("github-graph-container");
     const tooltip = document.getElementById("graph-tooltip");
+    const slider = document.getElementById("heatmap-slider");
+    const totalEl = document.getElementById("total-contributions");
+
     if (!container) return;
+
+    let isDragging = false;
+
+    function syncSlider() {
+      if (!container || !slider || isDragging) return;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (maxScroll > 0) {
+        const val = (container.scrollLeft / maxScroll) * 100;
+        slider.value = val;
+        slider.setAttribute("aria-valuenow", Math.round(val));
+      }
+    }
+
+    if (slider && container) {
+      const updateScrollFromSlider = () => {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        container.scrollLeft = (parseFloat(slider.value) / 100) * maxScroll;
+      };
+
+      slider.addEventListener("pointerdown", () => {
+        isDragging = true;
+      });
+
+      window.addEventListener("pointerup", () => {
+        if (isDragging) {
+          isDragging = false;
+          syncSlider();
+        }
+      });
+
+      slider.addEventListener("input", updateScrollFromSlider);
+      container.addEventListener("scroll", syncSlider, { passive: true });
+    }
 
     try {
       const res = await fetch(
@@ -56,6 +165,13 @@ const { username = "Panth1823" } = Astro.props;
       const data = await res.json();
 
       const contributions = data.contributions || [];
+      const totalCount =
+        data.total?.lastYear ??
+        contributions.reduce((acc, c) => acc + (c.count || 0), 0);
+
+      if (totalEl) {
+        totalEl.textContent = totalCount.toLocaleString();
+      }
 
       // Group into weeks (7 days each)
       const weeks = [];
@@ -78,13 +194,13 @@ const { username = "Panth1823" } = Astro.props;
 
           // Orange accent color scale
           let colorClass = "bg-[#1c1917]";
-          if (count > 0 && count < 3) colorClass = "bg-[#ff3800]/30";
-          else if (count >= 3 && count < 6) colorClass = "bg-[#ff3800]/60";
-          else if (count >= 6 && count < 10) colorClass = "bg-[#ff3800]";
+          if (count > 0 && count < 3) colorClass = "bg-accent/30";
+          else if (count >= 3 && count < 6) colorClass = "bg-accent/60";
+          else if (count >= 6 && count < 10) colorClass = "bg-accent";
           else if (count >= 10)
             colorClass = "bg-[#ffa080] shadow-[0_0_8px_rgba(255,56,0,0.8)]";
 
-          square.className = `size-2.5 rounded-[2px] ${colorClass} transition-all duration-150 hover:scale-125 hover:z-10 cursor-pointer`;
+          square.className = `size-2.5 rounded-xs ${colorClass} transition-all duration-150 hover:scale-125 hover:z-10 cursor-pointer`;
           square.dataset.date = day.date;
           square.dataset.count = count;
 
@@ -126,9 +242,13 @@ const { username = "Panth1823" } = Astro.props;
       // Auto-scroll to current date on right
       requestAnimationFrame(() => {
         container.scrollLeft = container.scrollWidth;
+        syncSlider();
       });
     } catch (err) {
       console.warn("GitHub contributions API failed, showing mock grid:", err);
+      if (totalEl && totalEl.textContent === "--") {
+        totalEl.textContent = "342";
+      }
     }
   }
 
