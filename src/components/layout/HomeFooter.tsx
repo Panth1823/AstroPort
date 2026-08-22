@@ -2,8 +2,8 @@
 
 import PixelBlast from "@/components/ui/PixelBlast";
 import { CAL_URL } from "@/lib/config";
+import { playSFX } from "@/lib/sound";
 import { getCalApi } from "@calcom/embed-react";
-import { bind, play } from "cuelume";
 import { Check, Copy, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -19,13 +19,11 @@ export function HomeFooter() {
   const copyEmail = async () => {
     await navigator.clipboard.writeText(email);
     setCopied(true);
-    play("press");
+    playSFX("copy");
     setTimeout(() => setCopied(false), 2000);
   };
 
   useEffect(() => {
-    bind();
-
     (async function () {
       const cal = await getCalApi();
       cal("ui", {
@@ -128,10 +126,10 @@ export function HomeFooter() {
               onClick={() => setIsCalLoading(true)}
               data-cal-link={calLink}
               data-cal-config='{"layout":"month_view","hideEventTypeDetails":true}'
-              data-cuelume-hover
-              data-cuelume-press
-              data-cuelume-release
-              aria-label="Book a call with Avi"
+              data-uisfx-hover="hover"
+              data-uisfx-press="press"
+              data-uisfx-release="release"
+              aria-label="Book a call with Panth"
               className="group/book relative flex h-10 w-fit shrink-0 items-center overflow-hidden rounded-xl border border-border/60 bg-card/80 pl-1.5 pr-4 shadow-sm outline-none transition-[background-color,border-color,transform] duration-300 ease-out hover:border-primary/40 hover:bg-primary/[0.05] focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100"
             >
               <span className="relative mr-2.5 block h-7 w-7 shrink-0 overflow-hidden rounded-[10px]">
@@ -191,7 +189,7 @@ export function HomeFooter() {
             <button
               type="button"
               onClick={copyEmail}
-              data-cuelume-hover="tick"
+              data-uisfx-hover="hover"
               aria-label={
                 copied ? `${email} copied to clipboard` : `Copy ${email}`
               }

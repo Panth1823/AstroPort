@@ -3,60 +3,83 @@ import Layout from "../layouts/Layout.astro";
 
 const caseStudies = [
   {
-    title: "formulaCoach",
+    title: "sharesave",
     description:
-      "An AI-powered F1 telemetry analysis platform — real-time data visualisations, lap comparisons, and race strategy insights powered by LLMs.",
+      "AI-ready \"second brain\" for saved content. Stop losing links in the void: capture intent, extract ideas, and actually revisit what you save.",
     date: "In progress",
-    href: "https://github.com/Panth1823",
-    links: [{ label: "GitHub", href: "https://github.com/Panth1823" }],
+    href: "https://sharesave-six.vercel.app/",
+    links: [{ label: "Website", href: "https://sharesave-six.vercel.app/" }],
   },
   {
-    title: "GenAI Exchange",
+    title: "Formula1 MCP Server",
     description:
-      "A hackathon platform powered by Google's Generative AI — connecting developers, mentors, and sponsors across India. Built end-to-end for the GDG hackathon ecosystem.",
-    date: "Nov 2024",
-    href: "https://github.com/Panth1823",
-    links: [{ label: "GitHub", href: "https://github.com/Panth1823" }],
+      "A Model Context Protocol (MCP) server providing real-time Formula 1 telemetry, driver stats, and lap analysis for AI models via FastF1 and OpenF1 APIs.",
+    date: "2025",
+    href: "https://github.com/Panth1823/formula1-mcp",
+    links: [{ label: "GitHub", href: "https://github.com/Panth1823/formula1-mcp" }],
   },
   {
-    title: "PLH — Parul Let's Hack",
+    title: "AstroPort",
     description:
-      "Full-stack hackathon management platform built for Parul University handling registrations, teams, judging, and live result broadcasting for 2000+ participants.",
-    date: "Mar 2024",
-    href: "https://github.com/Panth1823",
-    links: [{ label: "GitHub", href: "https://github.com/Panth1823" }],
+      "A sleek, typography-driven developer portfolio template built with Astro, Tailwind CSS, Space Grotesk typography, and tactile UI sound effects.",
+    date: "2025",
+    href: "https://panthshah.vercel.app",
+    links: [{ label: "Website", href: "https://panthshah.vercel.app" }],
   },
   {
-    title: "Skillathon",
+    title: "FlashGenie",
     description:
-      "An NSDC-backed skilling & education hackathon platform with real-time leaderboards, OBC support, and team management. Used across multiple national events.",
-    date: "Jan 2024",
-    href: "https://github.com/Panth1823",
-    links: [{ label: "GitHub", href: "https://github.com/Panth1823" }],
+      "AI-powered flashcard generator built with React and Google Gemini. Generates interactive quiz content from text and uploaded images with sub-second response times.",
+    date: "2024",
+    href: "https://flash-genie.vercel.app",
+    links: [{ label: "Website", href: "https://flash-genie.vercel.app" }],
+  },
+  {
+    title: "LearnTuber",
+    description:
+      "An AI summarization platform that converts YouTube course videos into concise structured notes and interactive quizzes. Winner of Skillathon 1.0.",
+    date: "2024",
+    href: "https://learntuber.vercel.app",
+    links: [{ label: "Website", href: "https://learntuber.vercel.app" }],
+  },
+  {
+    title: "Cartopia",
+    description:
+      "Full-stack e-commerce web application engineered with React frontend, Strapi CMS backend, PostgreSQL database, and Cloudinary media management.",
+    date: "2024",
+    href: "https://github.com/Panth1823/Cartopia",
+    links: [{ label: "GitHub", href: "https://github.com/Panth1823/Cartopia" }],
   },
 ];
 
 const tools = [
   {
-    title: "formulaCoach CLI  ↗",
+    title: "Formula1 MCP Server ↗",
     description:
-      "Command-line tool to pull and diff F1 session telemetry directly from the FastF1 API.",
-    tags: ["python", "cli", "f1"],
-    href: "https://github.com/Panth1823",
+      "Context provider allowing Claude and other AI models to query real-time F1 race pace, telemetry comparisons, and standings.",
+    tags: ["mcp", "typescript", "ai", "f1"],
+    href: "https://github.com/Panth1823/formula1-mcp",
   },
   {
-    title: "AI Prompt Kit  ↗",
+    title: "AstroPort Template ↗",
     description:
-      "A curated collection of prompts and LLM utilities for developer workflows — generation, review, and refactor.",
-    tags: ["ai", "llm", "tools"],
-    href: "https://github.com/Panth1823",
+      "Open-source developer portfolio built for speed, clean aesthetics, theme switching, and minimal audio micro-interactions.",
+    tags: ["astro", "tailwind", "typescript", "template"],
+    href: "https://github.com/Panth1823/AstroPort",
+  },
+  {
+    title: "FlashGenie AI Engine ↗",
+    description:
+      "Multi-modal prompt engineering and flashcard extraction utility powered by Gemini 1.5 and Cloudflare Workers.",
+    tags: ["react", "gemini", "ai", "edtech"],
+    href: "https://github.com/Panth1823/FlashGenie",
   },
 ];
 ---
 
 <Layout
   title="Work - Panth"
-  description="Case studies and open-source tools built by Panth."
+  description="Case studies and open-source tools built by Panth Shah."
 >
   <div class="pb-28">
     <!-- Breadcrumb -->
@@ -66,6 +89,7 @@ const tools = [
       <a
         href="/"
         class="inline-flex items-center gap-1.5 text-[#a6a09b] hover:text-accent transition-colors duration-150 text-[12px]"
+        data-uisfx-hover="hover"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -111,6 +135,7 @@ const tools = [
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
+              data-uisfx-hover="hover"
               class="group flex items-start justify-between gap-6 py-4 hover:opacity-80 transition-opacity duration-150"
             >
               <div class="flex-1 min-w-0">
@@ -133,7 +158,7 @@ const tools = [
     <!-- Tools -->
     <section>
       <p class="font-medium mb-6 section-label mt-16 text-md text-[#a6a09b]">
-        Tools
+        Tools & Open Source
       </p>
 
       <div class="flex flex-col divide-y divide-white/6">
@@ -146,6 +171,7 @@ const tools = [
                     href={tool.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-uisfx-hover="hover"
                     class="hover:text-accent transition-colors duration-150 inline-flex items-center gap-1"
                   >
                     {tool.title}

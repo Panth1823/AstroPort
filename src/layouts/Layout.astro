@@ -40,22 +40,10 @@ const {
     <Dock />
 
     <script>
-      // @ts-ignore
-      import { bind } from "cuelume";
+      import { initGlobalSFX } from "../lib/sound";
 
-      function initGlobalAudio() {
-        bind();
-        const interactiveElements = document.querySelectorAll("a, button, [role='button']");
-        interactiveElements.forEach((el) => {
-          if (!el.hasAttribute("data-cuelume-hover")) {
-            el.setAttribute("data-cuelume-hover", "tick");
-          }
-        });
-        bind();
-      }
-
-      initGlobalAudio();
-      document.addEventListener("astro:after-swap", initGlobalAudio);
+      initGlobalSFX();
+      document.addEventListener("astro:after-swap", initGlobalSFX);
     </script>
   </body>
 </html>

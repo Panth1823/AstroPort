@@ -3,52 +3,82 @@ import Layout from "../layouts/Layout.astro";
 
 const experience = [
   {
-    company: "Parul University",
-    location: "Vadodara, Gujarat",
+    company: "KOIOSTUDIO",
+    location: "Remote",
+    companyIcon: "layers",
     roles: [
       {
-        title: "Technical Lead — Skillathon",
-        type: "Contract",
-        period: "2024 - Now",
-        active: true,
-        icon: "briefcase",
-        description: "Leading full-stack development of Skillathon, an NSDC-backed skilling & hackathon platform with real-time leaderboards, OBC support, and team management.",
-      },
-      {
-        title: "Full-Stack Developer — PLH",
+        title: "Fullstack Developer",
         type: "Full-time",
-        period: "2023 - 24",
-        active: false,
+        period: "2026",
+        active: true,
         icon: "code",
-        description: "Built PLH (Parul Let's Hack), a hackathon management platform handling registrations, team formation, judging, and live result broadcasting for 2000+ participants.",
+        description:
+          "Architecting and building full-stack web applications and digital products, engineering scalable frontend interfaces and backend services.",
       },
     ],
   },
   {
-    company: "Google Developer Groups",
-    location: "India (Remote)",
+    company: "THINKSAGE",
+    location: "Remote (Mumbai, In)",
+    companyIcon: "layout",
     roles: [
       {
-        title: "Core Team — GenAI Exchange",
-        type: "Volunteer",
+        title: "Web Design & Development Intern",
+        type: "Internship",
+        period: "2025",
+        active: false,
+        icon: "design",
+        description:
+          "Expanded skills in modern development platforms including Webflow, Lovable, and Bolt, streamlining the design-to-development workflow and accelerating project delivery. Designed visually appealing elements to optimize UX and performed A/B testing on landing pages to increase engagement by 25%.",
+      },
+    ],
+  },
+  {
+    company: "INFI BRANDING SOLUTIONS",
+    location: "Vadodara, Gujarat",
+    companyIcon: "zap",
+    roles: [
+      {
+        title: "Workflow Automation & AI Intern",
+        type: "Internship",
+        period: "2025",
+        active: false,
+        icon: "cpu",
+        description:
+          "Built and experimented with AI automation workflows using N8N and Voiceflow, integrating Supabase, OpenAI LLM models, Postgres, WhatsApp API, and custom nodes. Leveraged RAG agents and embedding retrieval for context-aware responses with persistent chat memory.",
+      },
+    ],
+  },
+  {
+    company: "KOIOS ENG. SOLUTIONS",
+    location: "Remote (Bangalore, In)",
+    companyIcon: "terminal",
+    roles: [
+      {
+        title: "Front-End Developer Intern",
+        type: "Internship",
         period: "2024",
         active: false,
-        icon: "users",
-        description: "Helped organize and run the GenAI Exchange hackathon connecting developers, mentors, and sponsors across India, powered by Google's Generative AI stack.",
+        icon: "code",
+        description:
+          "Engineered responsive websites using React, HTML, CSS, and JavaScript, resulting in a 35% increase in user engagement. Introduced Git version control strategies boosting team collaboration efficiency by 40%. Integrated UI and animation libraries like shadcn to enhance website aesthetics and client satisfaction.",
       },
     ],
   },
   {
     company: "Independent",
-    location: "@panth1823",
+    location: " ",
+    companyIcon: "sparkles",
     roles: [
       {
-        title: "Open Source Builder",
+        title: "Open Source & AI Builder",
         type: "Self-driven",
-        period: "2022 - Now",
+        period: "2024 - Now",
         active: false,
         icon: "git",
-        description: "Building and contributing to open-source projects — from F1 telemetry tools (formulaCoach) to developer utilities and AI experiments.",
+        description:
+          "Building open-source AI projects and developer tools — including Formula1 MCP Server (F1 telemetry & race insights via MCP SDK), FlashGenie (AI flashcard generator), and sharesave.",
       },
     ],
   },
@@ -56,7 +86,7 @@ const experience = [
 
 const education = [
   {
-    period: "2022 - 26",
+    period: "2020 - 2024",
     degree: "B.Tech in Computer Science & Engineering",
     institution: "Parul University",
   },
@@ -65,7 +95,7 @@ const education = [
 
 <Layout
   title="About - Panth"
-  description="About Panth — CS student, developer, and builder of AI-powered full-stack applications."
+  description="About Panth Shah — Full-Stack & AI developer building web applications and intelligent tools."
 >
   <div class="pb-28">
 
@@ -85,21 +115,13 @@ const education = [
     <div class="flex items-center gap-4 mb-10">
       <img
         src="/me.jpg"
-        alt="Panth Patel"
+        alt="Panth Shah"
         class="size-14 shrink-0 rounded-xl object-cover object-center"
       />
       <div>
-        <h1 class="text-2xl font-bold tracking-tight">Panth</h1>
+        <h1 class="text-2xl font-bold tracking-tight">Panth Shah</h1>
         <p class="mt-0.5 text-[14px] text-muted-foreground">
-          Fullstack Developer at {" "}
-          <a
-            href="https://paruluniversity.ac.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-white hover:text-accent transition-colors underline underline-offset-4"
-          >
-            Koiostudio
-          </a>
+          Full-Stack & AI Developer
         </p>
       </div>
     </div>
@@ -107,20 +129,19 @@ const education = [
     <!-- Bio -->
     <div class="space-y-4 text-[0.88rem] leading-[1.75] text-[#888] mb-6 flex flex-col">
       <p class="mb-5 text-[15px] text-white">
-        I'm Panth, a Computer Science
-        student and developer based in India. I build
-        <span class="text-white">AI-powered products</span> and full-stack applications
-        that solve real problems — from hackathon platforms to F1 telemetry tools.
+        I'm Panth, a Computer Science graduate and developer based in India. I build
+        <span class="text-white">AI-powered products</span>, automation workflows, and responsive web applications
+        that solve real problems — from RAG-based systems to developer utilities.
       </p>
       <p class="mb-0 text-[15px] text-white">
         Right now I'm working on
         <a
-          href="https://github.com/Panth1823"
+          href="https://sharesave-six.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-accent hover:underline underline-offset-2"
-        > formulaCoach</a
-        > an AI-powered F1 analysis platform. I like digging into the technical
+        > sharesave</a
+        > — an AI-ready "second brain" for saved content. I like digging into the technical
         details, but the goal is always to keep things
         <span class="text-white">fast, focused, and useful</span>.
       </p>
@@ -147,7 +168,7 @@ const education = [
         <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.79-4.57 5.04.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"></path></svg>
       </a>
       <a
-        href="https://linkedin.com/in/panthpatel18"
+        href="https://linkedin.com/in/panth1823/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
@@ -156,7 +177,7 @@ const education = [
         <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"></path></svg>
       </a>
       <a
-        href="mailto:panthpatel18@example.com"
+        href="mailto:panthshah242@gmail.com"
         aria-label="Email"
         class="flex size-8 items-center justify-center rounded-md text-[#666] transition-colors duration-150 hover:text-accent"
       >
@@ -169,7 +190,7 @@ const education = [
 
     <!-- Experience -->
     <section class="mb-14">
-      <h2 class="  mb-6  section-label mt-16 text-md text-[#a6a09b]">
+      <h2 class="mb-6 section-label mt-16 text-md text-[#a6a09b]">
         Experience
       </h2>
 
@@ -180,10 +201,37 @@ const education = [
               <!-- Company icon bubble & vertical line -->
               <div class="flex flex-col items-center shrink-0 w-9">
                 <div class="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-[#292526] text-foreground">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                  </svg>
+                  {/* Distinct company bubble icons */}
+                  {job.companyIcon === "layers" && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+                      <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+                      <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
+                    </svg>
+                  )}
+                  {job.companyIcon === "layout" && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="18" height="18" x="3" y="3" rx="2" />
+                      <path d="M3 9h18" />
+                      <path d="M9 21V9" />
+                    </svg>
+                  )}
+                  {job.companyIcon === "zap" && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                  )}
+                  {job.companyIcon === "terminal" && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="4 17 10 11 4 5" />
+                      <line x1="12" y1="19" x2="20" y2="19" />
+                    </svg>
+                  )}
+                  {job.companyIcon === "sparkles" && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
+                    </svg>
+                  )}
                 </div>
                 <div class="border-l border-[#ffffff1a] flex-1 my-2"></div>
               </div>
@@ -209,34 +257,38 @@ const education = [
                           data-target={roleId}
                         >
                           <div class="flex items-start gap-2.5 min-w-0">
-                            <!-- Role type icon -->
-                            {role.icon === "briefcase" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#3a3a3a]"}`}>
-                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            <!-- Role type distinct icon -->
+                            {role.icon === "design" && (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class={`shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
+                                <path d="m12 19 7-7 3 3-7 7-3-3z" />
+                                <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                                <path d="m2 2 7.6 7.6" />
+                                <circle cx="11" cy="11" r="2" />
+                              </svg>
+                            )}
+                            {role.icon === "cpu" && (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class={`shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
+                                <rect width="16" height="16" x="4" y="4" rx="2" />
+                                <rect width="6" height="6" x="9" y="9" rx="1" />
+                                <path d="M15 2v2" /><path d="M15 20v2" /><path d="M2 15h2" /><path d="M2 9h2" /><path d="M20 15h2" /><path d="M20 9h2" /><path d="M9 2v2" /><path d="M9 20v2" />
                               </svg>
                             )}
                             {role.icon === "code" && (
-<svg width="1em" height="1em" class="size-4" aria-hidden="true" data-icon="solar:code-2-linear"><symbol id="ai:solar:code-2-linear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m16 11l1.697 1.527c1.542 1.388 2.313 2.082 2.313 2.973c0 .89-.771 1.585-2.314 2.973L16 20M13.987 5l-1.994 7.5L10 20M8 4.83L6.304 6.356C4.76 7.745 3.99 8.44 3.99 9.33s.771 1.585 2.314 2.973L8 13.83"></path></symbol><use href="#ai:solar:code-2-linear"></use></svg>
-                            )}
-                            {role.icon === "users" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class={`shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
                               </svg>
                             )}
                             {role.icon === "git" && (
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={` shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
-                                <circle cx="18" cy="18" r="3"></circle>
-                                <circle cx="6" cy="6" r="3"></circle>
-                                <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
-                                <line x1="6" y1="9" x2="6" y2="21"></line>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class={`shrink-0 ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
+                                <circle cx="18" cy="18" r="3" />
+                                <circle cx="6" cy="6" r="3" />
+                                <path d="M13 6h3a2 2 0 0 1 2 2v7" />
+                                <line x1="6" y1="9" x2="6" y2="21" />
                               </svg>
                             )}
                             <div class="min-w-0">
-                            <p class={`text-[15px] font-medium leading-snug ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
+                              <p class={`text-[15px] font-medium leading-snug ${role.active ? "text-accent" : "text-[#fbfafa]"}`}>
                                 {role.title}
                               </p>
                               <p class={`text-sm mt-0.5 ${role.active ? "text-accent/60" : "text-[#a6a09b]"}`}>
@@ -255,7 +307,7 @@ const education = [
                             stroke-width="1.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="chevron shrink-0   transition-transform duration-200"
+                            class="chevron shrink-0 transition-transform duration-200"
                           >
                             <polyline points="6 9 12 15 18 9"></polyline>
                           </svg>
@@ -280,7 +332,7 @@ const education = [
 
     <!-- Education -->
     <section>
-      <h2 class="font-medium    mb-6  section-label mt-16 text-md text-[#a6a09b]">
+      <h2 class="font-medium mb-6 section-label mt-16 text-md text-[#a6a09b]">
         Education
       </h2>
 
@@ -291,7 +343,7 @@ const education = [
               <span class="text-sm text-[#a6a09b]">{edu.period}</span>
               <div>
                 <span class="text-[15px] font-semibold text-white">{edu.degree}</span>
-                <span class="text-[15px]  ">, {edu.institution}.</span>
+                <span class="text-[15px] text-[#a6a09b]">, {edu.institution}.</span>
               </div>
             </div>
           ))
@@ -303,6 +355,8 @@ const education = [
 </Layout>
 
 <script>
+  import { playSFX } from "../lib/sound";
+
   function initAccordion() {
     const toggles = document.querySelectorAll<HTMLButtonElement>(".role-toggle");
 
@@ -321,10 +375,12 @@ const education = [
           content?.classList.add("hidden");
           chevron?.classList.remove("rotate-180");
           fresh.setAttribute("aria-expanded", "false");
+          playSFX("collapse");
         } else {
           content?.classList.remove("hidden");
           chevron?.classList.add("rotate-180");
           fresh.setAttribute("aria-expanded", "true");
+          playSFX("expand");
         }
       });
     });
