@@ -72,6 +72,7 @@ html[data-loader-done] .loading-screen {
 
 /* Smaller sizing for non-Latin scripts */
 .loading-screen__text--hi,
+.loading-screen__text--gu,
 .loading-screen__text--mr,
 .loading-screen__text--ml,
 .loading-screen__text--secondary {

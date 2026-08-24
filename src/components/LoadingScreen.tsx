@@ -9,9 +9,7 @@ import "./LoadingScreen.css";
 const GREETINGS = [
   { text: "Hello.", lang: "en", blurStagger: true },
   { text: "नमस्ते.", lang: "hi" },
-  { text: "Bonjour.", lang: "fr" },
-  { text: "Hola!", lang: "es" },
-  { text: "こんにちは.", lang: "ja" },
+  { text: "નમસ્તે.", lang: "gu" },
 ];
 
 /** Background color for the loader panels */
