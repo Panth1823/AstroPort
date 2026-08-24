@@ -146,3 +146,40 @@ html:not(.dark) .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
 .disable-transition * {
   transition: none !important;
 }
+
+/* ── Loading Screen Integration ────────────────── */
+
+/* Lock scroll while loader is active */
+body.loading {
+  overflow: hidden !important;
+}
+
+/* Hide page content behind loader until done (only on first visit when loader plays) */
+html:not([data-loader-done]) body:not(.loading-done) > *:not(.loading-screen) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Page-reveal animations — only after the loader actually played (not on repeat visits) */
+@keyframes pageRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Only animate when loader played this visit (html won't have data-loader-done) */
+html:not([data-loader-done]) body.loading-done > *:not(.loading-screen) {
+  animation: pageRevealUp 0.55s ease-out 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-loader-done]) body.loading-done > *:not(.loading-screen) {
+    animation: none;
+    opacity: 1;
+  }
+}

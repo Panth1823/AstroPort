@@ -19,6 +19,7 @@ export function playSFX(cue: CueName, options?: PlayOptions): void {
   if (!player) return;
 
   try {
+    player.unlock().catch(() => {});
     player.play(cue, options);
   } catch (err) {
     // Ignore audio playback errors if audio context is blocked
@@ -26,19 +27,51 @@ export function playSFX(cue: CueName, options?: PlayOptions): void {
 }
 
 export function initGlobalSFX(): void {
-  if (typeof window === "undefined") return null;
+  if (typeof window === "undefined") return;
 
   const player = getSFX();
   if (!player) return;
 
-  // Unlock AudioContext on first user interaction
-  const unlockAudio = () => {
-    player.unlock().catch(() => {});
-    window.removeEventListener("pointerdown", unlockAudio);
-    window.removeEventListener("keydown", unlockAudio);
+  // Eagerly unlock AudioContext if browser policy allows
+  player.unlock().catch(() => {});
+
+  // Preload common UI cues to avoid first-play synthesis delay
+  player.preload(["hover", "press", "release", "select", "toggle-on", "toggle-off", "open"]).catch(() => {});
+
+  // Listen to ANY user interaction (hover, mouse movement, scroll, touch, key, focus)
+  // to unlock AudioContext without requiring an explicit click.
+  const interactionEvents = [
+    "pointermove",
+    "pointerover",
+    "pointerenter",
+    "mousemove",
+    "touchstart",
+    "pointerdown",
+    "keydown",
+    "wheel",
+    "scroll",
+    "focus",
+  ] as const;
+
+  const cleanupListeners = () => {
+    interactionEvents.forEach((evt) => {
+      window.removeEventListener(evt, unlockAudio);
+      document.removeEventListener(evt, unlockAudio);
+    });
   };
-  window.addEventListener("pointerdown", unlockAudio, { once: true });
-  window.addEventListener("keydown", unlockAudio, { once: true });
+
+  const unlockAudio = () => {
+    player.unlock().then((unlocked) => {
+      if (unlocked) {
+        cleanupListeners();
+      }
+    }).catch(() => {});
+  };
+
+  interactionEvents.forEach((evt) => {
+    window.addEventListener(evt, unlockAudio, { passive: true });
+    document.addEventListener(evt, unlockAudio, { passive: true });
+  });
 
   // Clean up any existing document binding
   if (bindingInstance) {

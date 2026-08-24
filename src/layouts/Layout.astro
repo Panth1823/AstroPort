@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Dock from "../components/Dock.astro";
+import LoadingScreen from "../components/LoadingScreen.tsx";
 
 export interface Props {
   title?: string;
@@ -32,8 +33,13 @@ const {
     />
     <!-- Theme script: must run inline before first paint to avoid flash -->
     <script is:inline src="/theme.js"></script>
+    <!-- Loader gate: if already seen, mark body immediately so content is visible before React hydrates -->
+    <script is:inline>
+      try{if(localStorage.getItem("loading-screen-seen")==="true"){document.documentElement.dataset.loaderDone="1";document.addEventListener("DOMContentLoaded",function(){document.body.classList.add("loading-done")})}}catch(e){}
+    </script>
   </head>
   <body>
+    <LoadingScreen client:only="react" />
     <div class="mx-auto w-full max-w-160 px-6 pt-16 sm:pt-24">
       <slot />
     </div>

@@ -1,0 +1,158 @@
+/* ═══════════════════════════════════════════════════
+   Loading Screen — CSS
+   Self-contained styles for the portfolio loader.
+   ═══════════════════════════════════════════════════ */
+
+/* ── Overlay Container ─────────────────────────── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  pointer-events: all;
+}
+
+/* Instantly hide if already seen */
+html[data-loader-done] .loading-screen {
+  display: none !important;
+}
+
+.loading-screen--exit {
+  pointer-events: none;
+}
+
+/* ── Panel Columns (4 vertical strips) ─────────── */
+.loading-panel {
+  flex: 1;
+  height: 100%;
+  /* Color set via inline style from props */
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-screen--exit .loading-panel {
+  transform: translateY(-100%);
+}
+
+.loading-screen--exit .loading-panel:nth-child(1) { transition-delay: 0s; }
+.loading-screen--exit .loading-panel:nth-child(2) { transition-delay: 0.1s; }
+.loading-screen--exit .loading-panel:nth-child(3) { transition-delay: 0.2s; }
+.loading-screen--exit .loading-panel:nth-child(4) { transition-delay: 0.3s; }
+
+/* ── Centered Text Overlay ─────────────────────── */
+.loading-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s;
+}
+
+.loading-screen--exit .loading-content {
+  opacity: 0;
+}
+
+/* ── Greeting Text ─────────────────────────────── */
+.loading-screen__text {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(4rem, 12vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin: 0;
+  /* Prevent layout shift from different scripts */
+  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Smaller sizing for non-Latin scripts */
+.loading-screen__text--hi,
+.loading-screen__text--mr,
+.loading-screen__text--ml,
+.loading-screen__text--secondary {
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  letter-spacing: -0.05em;
+}
+
+/* ── Character Blur-Stagger Keyframes ──────────── */
+@keyframes charBlurIn {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+.loading-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  animation: charBlurIn 0.6s ease-out forwards;
+  /* animation-delay set via inline style */
+}
+
+/* Whitespace character — preserve width */
+.loading-char--space {
+  width: 0.3em;
+}
+
+/* ── Page-reveal animations ────────────────────── */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Reduced Motion ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .loading-panel {
+    transition-duration: 0.2s;
+  }
+
+  .loading-screen--exit .loading-panel {
+    /* Fade instead of slide */
+    transform: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .loading-screen--exit .loading-panel:nth-child(1) { transition-delay: 0s; }
+  .loading-screen--exit .loading-panel:nth-child(2) { transition-delay: 0.05s; }
+  .loading-screen--exit .loading-panel:nth-child(3) { transition-delay: 0.1s; }
+  .loading-screen--exit .loading-panel:nth-child(4) { transition-delay: 0.15s; }
+
+  .loading-char {
+    /* Skip blur stagger, simple fade */
+    filter: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .loading-content {
+    transition-duration: 0.15s;
+  }
+}
