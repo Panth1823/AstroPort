@@ -12,6 +12,9 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      sourcemap: true
+    },
     resolve: {
       alias: {
         '@': path.resolve('./src')

@@ -160,56 +160,20 @@ const { username = "Panth1823" } = Astro.props;
     let contributions = [];
     let totalCount = 0;
 
-    // Primary API: github-contributions.vercel.app
+    // Use the API that supports browser CORS. Load this section only when visible.
     try {
       const res = await fetch(
-        `https://github-contributions.vercel.app/api/v1/${username}`,
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
         { signal: AbortSignal.timeout(6000) }
       );
-      if (!res.ok) throw new Error(`Vercel API returned status ${res.status}`);
+      if (!res.ok) throw new Error(`GitHub contributions API returned status ${res.status}`);
       const data = await res.json();
-      if (Array.isArray(data.contributions) && data.contributions.length > 0) {
-        const sorted = [...data.contributions].sort((a, b) =>
-          a.date.localeCompare(b.date)
-        );
-        const today = new Date();
-        const todayStr = today.toISOString().split("T")[0];
-
-        // Sunday ~52 weeks ago
-        const start = new Date(today);
-        start.setDate(today.getDate() - 364);
-        start.setDate(start.getDate() - start.getDay());
-        const startStr = start.toISOString().split("T")[0];
-
-        // Saturday of current week
-        const end = new Date(today);
-        end.setDate(today.getDate() + (6 - today.getDay()));
-        const endStr = end.toISOString().split("T")[0];
-
-        contributions = sorted.filter(
-          (c) => c.date >= startStr && c.date <= endStr
-        );
-        totalCount = contributions
-          .filter((c) => c.date <= todayStr)
-          .reduce((acc, c) => acc + (c.count || 0), 0);
-      }
+      contributions = data.contributions || [];
+      totalCount =
+        data.total?.lastYear ??
+        contributions.reduce((acc, c) => acc + (c.count || 0), 0);
     } catch (err1) {
-      console.warn("Primary GitHub contributions API failed, trying fallback...", err1);
-      // Secondary API fallback: jogruber API
-      try {
-        const res = await fetch(
-          `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-          { signal: AbortSignal.timeout(4000) }
-        );
-        if (!res.ok) throw new Error(`Jogruber API returned status ${res.status}`);
-        const data = await res.json();
-        contributions = data.contributions || [];
-        totalCount =
-          data.total?.lastYear ??
-          contributions.reduce((acc, c) => acc + (c.count || 0), 0);
-      } catch (err2) {
-        console.warn("All GitHub contribution APIs failed, using fallback grid:", err2);
-      }
+      console.warn("GitHub contributions unavailable, using fallback grid:", err1);
     }
 
     // Fallback if both APIs failed (e.g. offline)
@@ -310,6 +274,18 @@ const { username = "Panth1823" } = Astro.props;
     });
   }
 
-  fetchContributions();
-  document.addEventListener("astro:after-swap", fetchContributions);
+  const spotlight = document.getElementById("spotlight");
+  if (spotlight && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        fetchContributions();
+      },
+      { rootMargin: "400px" },
+    );
+    observer.observe(spotlight);
+  } else {
+    fetchContributions();
+  }
 </script>

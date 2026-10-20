@@ -5,7 +5,7 @@ import CurrentlyBuilding from "../components/CurrentlyBuilding.astro";
 import SelectedWork from "../components/SelectedWork.astro";
 import Spotlight from "../components/Spotlight.astro";
 import SkillsShowcase from "../components/SkillsShowcase.astro";
-import { HomeFooter } from "../components/layout/HomeFooter";
+import HomeFooter from "../components/HomeFooter.astro";
 ---
 
 <Layout
@@ -17,5 +17,5 @@ import { HomeFooter } from "../components/layout/HomeFooter";
   <SelectedWork />
   <Spotlight />
   <SkillsShowcase />
-  <HomeFooter client:only="react" />
+  <HomeFooter />
 </Layout>

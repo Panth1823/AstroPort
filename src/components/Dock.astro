@@ -123,18 +123,3 @@ const inactiveBtn = "hover:text-white hover:bg-white/12 hover:border-white/15 ho
   <ThemeToggle />
 </nav>
 
-<script>
-  import { playSFX } from "../lib/sound";
-
-  function initDockSounds() {
-    const items = document.querySelectorAll("#dock a, #dock button");
-    items.forEach((item) => {
-      item.addEventListener("click", () => {
-        playSFX("press");
-      });
-    });
-  }
-
-  initDockSounds();
-  document.addEventListener("astro:after-swap", initDockSounds);
-</script>

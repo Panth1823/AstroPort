@@ -256,6 +256,18 @@ const projects: Project[] = [
     }
   }
 
-  fetchRepoStats();
-  document.addEventListener("astro:after-swap", fetchRepoStats);
+  const selectedWork = document.getElementById("selected-work");
+  if (selectedWork && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        fetchRepoStats();
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(selectedWork);
+  } else {
+    fetchRepoStats();
+  }
 </script>

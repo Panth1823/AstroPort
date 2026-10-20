@@ -1,5 +1,5 @@
 ---
-// HomeFooter component — "Have a project in mind?" footer with PixelBlast background
+// Server-rendered footer with small, progressive-enhancement behavior.
 interface Props {
   email?: string;
   calUrl?: string;
@@ -12,9 +12,10 @@ const { email = "panthshah242@gmail.com", calUrl = "https://cal.com/panth18" } =
 <footer
   class="relative mt-16 overflow-hidden rounded-2xl border border-white/10 bg-[#12100e]/90 p-8 sm:p-10 backdrop-blur-md"
 >
-  <!-- PixelBlast Canvas Background -->
-  <div class="pointer-events-none absolute inset-0 z-0 opacity-40">
-    <canvas id="pixel-blast-canvas" class="h-full w-full block"></canvas>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 z-0 opacity-30 [background-image:radial-gradient(circle_at_80%_20%,rgba(255,56,0,.2),transparent_35%),linear-gradient(110deg,transparent_35%,rgba(255,255,255,.04),transparent_65%)]"
+  >
   </div>
 
   <div class="relative z-10 flex flex-col gap-8">
@@ -106,164 +107,6 @@ const { email = "panthshah242@gmail.com", calUrl = "https://cal.com/panth18" } =
 </footer>
 
 <script>
-  // WebGL PixelBlast Background Effect
-  function initPixelBlast() {
-    const canvas = document.getElementById(
-      "pixel-blast-canvas",
-    ) as HTMLCanvasElement | null;
-    if (!canvas) return;
-
-    const gl = canvas.getContext("webgl");
-    if (!gl) return;
-
-    const vsSource = `
-      attribute vec2 aPosition;
-      void main() {
-        gl_Position = vec4(aPosition, 0.0, 1.0);
-      }
-    `;
-
-    const fsSource = `
-      precision highp float;
-      uniform vec3 uColor;
-      uniform vec2 uResolution;
-      uniform float uTime;
-      uniform float uPixelSize;
-
-      float hash11(float n) { return fract(sin(n) * 43758.5453); }
-
-      float vnoise(vec3 p) {
-        vec3 ip = floor(p);
-        vec3 fp = fract(p);
-        float n000 = hash11(dot(ip + vec3(0.0,0.0,0.0), vec3(1.0,57.0,113.0)));
-        float n100 = hash11(dot(ip + vec3(1.0,0.0,0.0), vec3(1.0,57.0,113.0)));
-        float n010 = hash11(dot(ip + vec3(0.0,1.0,0.0), vec3(1.0,57.0,113.0)));
-        float n110 = hash11(dot(ip + vec3(1.0,1.0,0.0), vec3(1.0,57.0,113.0)));
-        float n001 = hash11(dot(ip + vec3(0.0,0.0,1.0), vec3(1.0,57.0,113.0)));
-        float n101 = hash11(dot(ip + vec3(1.0,0.0,1.0), vec3(1.0,57.0,113.0)));
-        float n011 = hash11(dot(ip + vec3(0.0,1.0,1.0), vec3(1.0,57.0,113.0)));
-        float n111 = hash11(dot(ip + vec3(1.0,1.0,1.0), vec3(1.0,57.0,113.0)));
-        vec3 w = fp*fp*fp*(fp*(fp*6.0-15.0)+10.0);
-        float x00 = mix(n000, n100, w.x);
-        float x10 = mix(n010, n110, w.x);
-        float x01 = mix(n001, n101, w.x);
-        float x11 = mix(n011, n111, w.x);
-        float y0 = mix(x00, x10, w.y);
-        float y1 = mix(x01, x11, w.y);
-        return mix(y0, y1, w.z) * 2.0 - 1.0;
-      }
-
-      float fbm(vec2 uv, float t) {
-        vec3 p = vec3(uv * 3.0, t);
-        float sum = 0.0;
-        float amp = 1.0;
-        float freq = 1.0;
-        for (int i = 0; i < 4; ++i) {
-          sum += amp * vnoise(p * freq);
-          freq *= 1.25;
-          amp *= 0.5;
-        }
-        return sum * 0.5 + 0.5;
-      }
-
-      void main() {
-        vec2 fragCoord = gl_FragCoord.xy;
-        vec2 norm = fragCoord / uResolution;
-        float aspectRatio = uResolution.x / uResolution.y;
-
-        vec2 pixelId = floor(fragCoord / uPixelSize);
-        vec2 cellCoord = pixelId * uPixelSize;
-        vec2 uv = (cellCoord / uResolution) * vec2(aspectRatio, 1.0);
-
-        float base = fbm(uv, uTime * 0.15) - 0.45;
-        float feed = base;
-
-        float bayer = fract(dot(pixelId, vec2(0.5, 0.75)));
-        float bw = step(0.5, feed + (bayer - 0.5) * 0.2);
-
-        float edge = min(min(norm.x, norm.y), min(1.0 - norm.x, 1.0 - norm.y));
-        float fade = smoothstep(0.0, 0.4, edge);
-        bw *= fade;
-
-        gl_FragColor = vec4(uColor, bw * 0.45);
-      }
-    `;
-
-    function createShader(
-      gl: WebGLRenderingContext,
-      type: number,
-      source: string,
-    ) {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
-    }
-
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
-    if (!vertexShader || !fragmentShader) return;
-
-    const program = gl.createProgram();
-    if (!program) return;
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    gl.useProgram(program);
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-
-    const posAttr = gl.getAttribLocation(program, "aPosition");
-    gl.enableVertexAttribArray(posAttr);
-    gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
-
-    const uColorLoc = gl.getUniformLocation(program, "uColor");
-    const uResolutionLoc = gl.getUniformLocation(program, "uResolution");
-    const uTimeLoc = gl.getUniformLocation(program, "uTime");
-    const uPixelSizeLoc = gl.getUniformLocation(program, "uPixelSize");
-
-    // Orange accent rgb(255, 56, 0) => vec3(1.0, 0.22, 0.0)
-    gl.uniform3f(uColorLoc, 1.0, 0.22, 0.0);
-
-    function resize() {
-      if (!canvas || !gl) return;
-      const width = canvas.parentElement?.clientWidth || 300;
-      const height = canvas.parentElement?.clientHeight || 200;
-      canvas.width = width;
-      canvas.height = height;
-      gl.viewport(0, 0, width, height);
-      gl.uniform2f(uResolutionLoc, width, height);
-      gl.uniform1f(uPixelSizeLoc, 4.0);
-    }
-
-    resize();
-    window.addEventListener("resize", resize);
-
-    let startTime = performance.now();
-    let animationFrameId: number;
-
-    function render() {
-      if (!gl) return;
-      const now = (performance.now() - startTime) / 1000;
-      gl.uniform1f(uTimeLoc, now);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      animationFrameId = requestAnimationFrame(render);
-    }
-
-    render();
-  }
-
   // Copy Email Logic
   function initCopyEmail() {
     const copyBtn = document.getElementById("copy-email-btn");
@@ -294,7 +137,6 @@ const { email = "panthshah242@gmail.com", calUrl = "https://cal.com/panth18" } =
   }
 
   function setup() {
-    initPixelBlast();
     initCopyEmail();
   }
 
