@@ -2,6 +2,8 @@
 import "../styles/global.css";
 import Dock from "../components/Dock.astro";
 import LoadingScreen from "../components/LoadingScreen.tsx";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import Analytics from "@vercel/analytics/astro";
 
 export interface Props {
   title?: string;
@@ -44,6 +46,8 @@ const {
       <slot />
     </div>
     <Dock />
+    <SpeedInsights />
+    <Analytics />
 
     <script>
       import { initGlobalSFX } from "../lib/sound";
