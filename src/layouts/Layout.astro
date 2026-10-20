@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Dock from "../components/Dock.astro";
+import LoadingScreen from "../components/LoadingScreen.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
 
@@ -36,6 +37,7 @@ const {
     <script is:inline src="/theme.js"></script>
   </head>
   <body>
+    <LoadingScreen />
     <div class="mx-auto w-full max-w-160 px-6 pt-16 sm:pt-24">
       <slot />
     </div>

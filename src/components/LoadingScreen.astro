@@ -1,0 +1,76 @@
+---
+import "./LoadingScreen.css";
+---
+
+<div class="loading-screen" id="loading-screen" aria-hidden="true">
+  <div class="loading-panel" style="background-color:#ff3800"></div>
+  <div class="loading-panel" style="background-color:#ff3800"></div>
+  <div class="loading-panel" style="background-color:#ff3800"></div>
+  <div class="loading-panel" style="background-color:#ff3800"></div>
+  <div class="loading-content">
+    <p class="loading-screen__text" id="loading-greeting"></p>
+  </div>
+</div>
+
+<script is:inline>
+  const screen = document.getElementById("loading-screen");
+  const greeting = document.getElementById("loading-greeting");
+  const greetings = [
+    { text: "Hello.", lang: "en", stagger: true },
+    { text: "नमस्ते.", lang: "hi" },
+    { text: "નમસ્તે.", lang: "gu" },
+  ];
+  const seenKey = "loading-screen-seen";
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function showGreeting(item) {
+    if (!greeting) return;
+    greeting.className = `loading-screen__text${item.lang === "en" ? "" : ` loading-screen__text--${item.lang} loading-screen__text--secondary`}`;
+    greeting.replaceChildren();
+    if (item.stagger && !reducedMotion) {
+      [...item.text].forEach((character, index) => {
+        const span = document.createElement("span");
+        span.className = `loading-char${character === " " ? " loading-char--space" : ""}`;
+        span.textContent = character === " " ? "\u00a0" : character;
+        span.style.animationDelay = `${index * 0.04}s`;
+        greeting.appendChild(span);
+      });
+    } else {
+      greeting.textContent = item.text;
+    }
+  }
+
+  function finish() {
+    if (!screen) return;
+    screen.classList.add("loading-screen--exit");
+    window.setTimeout(() => {
+      document.documentElement.setAttribute("data-loader-done", "true");
+      document.body.classList.remove("loading");
+      screen.remove();
+      try { localStorage.setItem(seenKey, "true"); } catch {}
+    }, reducedMotion ? 400 : 900);
+  }
+
+  try {
+    if (localStorage.getItem(seenKey) === "true") {
+      document.documentElement.setAttribute("data-loader-done", "true");
+      screen?.remove();
+    } else if (screen) {
+      document.body.classList.add("loading");
+      let index = 0;
+      showGreeting(greetings[index]);
+      const next = () => {
+        if (index < greetings.length - 1) {
+          index += 1;
+          showGreeting(greetings[index]);
+          window.setTimeout(next, index === 1 ? 250 : 250);
+        } else {
+          window.setTimeout(finish, 500);
+        }
+      };
+      window.setTimeout(next, 1200);
+    }
+  } catch {
+    screen?.remove();
+  }
+</script>

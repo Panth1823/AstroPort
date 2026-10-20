@@ -147,3 +147,7 @@ html:not(.dark) .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
   transition: none !important;
 }
 
+body.loading {
+  overflow: hidden;
+}
+
