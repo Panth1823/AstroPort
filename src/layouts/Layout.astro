@@ -45,5 +45,11 @@ const {
     <SpeedInsights />
     <Analytics />
 
+    <script>
+      import { initGlobalSFX } from "../lib/sound";
+
+      initGlobalSFX();
+      document.addEventListener("astro:after-swap", initGlobalSFX);
+    </script>
   </body>
 </html>
